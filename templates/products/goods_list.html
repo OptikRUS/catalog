@@ -1,0 +1,48 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+    <link href="{% static 'css/products.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="col-lg-4 col-md-6 mb-4">
+            <table>
+                <thead>
+                <tr>
+                    <th>Наименование товара</th>
+                    <th>Имя поставщика</th>
+                    <th>Цена за штуку</th>
+                    <th>Количество на складе</th>
+                    <th>Дата поступления</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for product in object_list %}
+                    <tr>
+                        <td>{{ product.name }}</td>
+                        <td>{{ product.provider_name }}</td>
+                        <td>{{ product.price }}</td>
+                        <td>{{ product.quantity }}</td>
+                        <td>{{ product.date_delivery }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <footer class="py-5 bg-dark">
+        <div class="container">
+            <p class="m-0 text-center text-white">Copyright &copy; GeekShop {% now "Y" %}</p>
+        </div>
+        <!-- /.container -->
+    </footer>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/products.js' %}"></script>
+{% endblock %}
