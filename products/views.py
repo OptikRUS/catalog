@@ -1,25 +1,21 @@
 from django.shortcuts import render
-from django.views.generic.list import ListView
 
 from products.models import Product, ProductCategory
 
 
-def index(request):
-    context = {
-        'title': 'главная',
-    }
-    return render(request, 'products/index.html', context)
+def get_all_products(category_id=None):
+    return Product.objects.select_related().all()
 
 
 def products(request, category_id=None):
     if category_id:
-        products = Product.objects.filter(category_id=category_id)
+        products_list = Product.objects.filter(category_id=category_id)
     else:
-        products = Product.objects.all()
+        products_list = get_all_products()
 
     context = {
         'title': 'продукты',
         'categories': ProductCategory.objects.all(),
-        'products': products
+        'products': products_list
     }
     return render(request, 'products/goods_list.html', context)
