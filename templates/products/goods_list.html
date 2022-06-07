@@ -2,47 +2,60 @@
 {% load static %}
 
 {% block css %}
-    <link href="{% static 'css/products.css' %}" rel="stylesheet">
+    <link href="{% static 'css/tests.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <div class="col-lg-4 col-md-6 mb-4">
-            <table>
-                <thead>
-                <tr>
-                    <th>Наименование товара</th>
-                    <th>Имя поставщика</th>
-                    <th>Цена за штуку</th>
-                    <th>Количество на складе</th>
-                    <th>Дата поступления</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for product in object_list %}
-                    <tr>
-                        <td>{{ product.name }}</td>
-                        <td>{{ product.provider_name }}</td>
-                        <td>{{ product.price }}</td>
-                        <td>{{ product.quantity }}</td>
-                        <td>{{ product.date_delivery }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
+        {% if user.is_authenticated %}
+            <div class="row">
+                <div class="col-lg-3">
+                    <h1 class="my-4">Каталог</h1>
+                    <div class="list-group">
+                        <a href="{% url 'products:category' 0 %}" class="list-group-item">Все категории</a>
+                        {% for category in categories %}
+                            <a href="{% url 'products:category' category.pk %}"
+                               class="list-group-item">{{ category.name }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel"></div>
+                    <div class="row">
+                        {% if products %}
+                            {% for product in products %}
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h4 class="card-title">
+                                                <a href="#">{{ product.name }}</a>
+                                            </h4>
+                                            <p class="card-text">{{ product.price }} {{ product.quantity }}</p>
+                                            <p class="card-text">{{ product.provider_name }}</p>
+                                            <p class="card-text">{{ product.date_delivery }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <h4 class="card-title" style="color: red">
+                                В данной катеогрии нет продуктов
+                            </h4>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="text-center">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            Вы не авторизованы
+                        </h4>
+                        <a class="nav-link" href="{% url 'login' %}">Войти?</a>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
-{% endblock %}
-
-{% block footer %}
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; GeekShop {% now "Y" %}</p>
-        </div>
-        <!-- /.container -->
-    </footer>
-{% endblock %}
-
-{% block js %}
-    <script src="{% static 'js/products.js' %}"></script>
 {% endblock %}
