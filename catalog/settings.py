@@ -20,12 +20,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('SECRET_KEY')
+SECRET_KEY = 'django-insecure-mq%u5u%hjc6gyg$!lgephf0-ec-2_zjan@mm0*itbje(j3-t4z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # SITE_ID = 1: ru.catalog.com
 # SITE_ID = 2: en.catalog.com
@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'catalog.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'catalog',
+        'USER': 'optikrus',
+        'PASSWORD': 'password123456',
+        'HOST': 'db',
+        'PORT': '5432',
     }
 }
 
@@ -126,8 +130,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'static',
+    BASE_DIR / 'templates',
 ]
+STATIC_ROOT = BASE_DIR / '..' / 'nginx' / 'static'
 
 
 # Default primary key field type
