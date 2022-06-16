@@ -26,6 +26,7 @@ SECRET_KEY = 'django-insecure-mq%u5u%hjc6gyg$!lgephf0-ec-2_zjan@mm0*itbje(j3-t4z
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1:8002']
 
 # SITE_ID = 1: ru.catalog.com
 # SITE_ID = 2: en.catalog.com
