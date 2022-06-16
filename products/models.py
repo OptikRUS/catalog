@@ -1,9 +1,15 @@
 from django.db import models
+from django.contrib.sites.models import Site
+from django.db.models import Manager
+from django.contrib.sites.managers import CurrentSiteManager
 
 
 class ProductCategory(models.Model):
     name = models.CharField('название категории', max_length=64, unique=True)
     description = models.TextField('описание', blank=True, null=True)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, null=True)
+    object = Manager()
+    on_site = CurrentSiteManager('site')
 
     class Meta:
         verbose_name = 'категория товаров'
@@ -20,6 +26,9 @@ class Product(models.Model):
     price = models.DecimalField('цена за штуку', max_digits=8, decimal_places=2, default=0)
     quantity = models.PositiveIntegerField('количество на складе', default=0)
     provider_name = models.CharField('имя поставщика', max_length=256, unique=True)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE, null=True)
+    object = Manager()
+    on_site = CurrentSiteManager('site')
 
     class Meta:
         verbose_name = 'продукт'
