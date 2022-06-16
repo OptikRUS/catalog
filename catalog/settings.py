@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-mq%u5u%hjc6gyg$!lgephf0-ec-2_zjan@mm0*itbje(j3-t4z'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['http://127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 # SITE_ID = 1: ru.catalog.com
 # SITE_ID = 2: en.catalog.com
